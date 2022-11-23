@@ -1,3 +1,4 @@
+import datetime
 import json
 import requests
 
@@ -9,17 +10,26 @@ import requests
 # Menu för kanalerna
 # skicka p3 id till tablå url
 def get_programs():
-    response = requests.get('https://api.sr.se/api/v2/programs/index?format=json&channelid=200')
+    response = requests.get('https://api.sr.se/v2/scheduledepisodes/index?format=json&channelid=132')
+    print(response.content)
 
     data = response.json()
 
+    # Ta emot ett id
+    # från id ta fram info om kanalen kopplad till id
+    # omvandla tiden till rätt format
     # programcategory, name, broadcastinfo
-    for x in data['programs']:
-        info_name = x['name']
-        info_time = x['broadcastinfo']
-        print('>',info_name, info_time)
+    for x in data['schedule']:
+        info_name = x['title']
+        temp = x['starttimeutc']
+        startTimeInMillis = response.findall(r'\d+', temp)
+        startTime = datetime.datetime.fromtimestamp(int(startTimeInMillis[0])/1000)
+        startTime = startTime.strftime('%H:%M')
+        endTime = x['endtimeutc']
+        print('>',info_name, startTime, endTime)
 
-    return x
+    return info_name
+
 
 def get_channels():
     # Get SR API content
@@ -28,13 +38,14 @@ def get_channels():
 
     data = response.json()
 
-    # Write out channle name and channel id
+    # Write out channel name and channel id
     for x in data['channels']:
         channel_name = x['name']
         channel_id = x['id']
         print(channel_name, channel_id)
 
     return x
+
 
 
 def channels_menu():
