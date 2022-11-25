@@ -10,7 +10,7 @@ import requests
 # Menu för kanalerna
 # skicka p3 id till tablå url
 def get_programs():
-    response = requests.get('https://api.sr.se/v2/channels/?channelid=132/index?format=json&channelid=132')
+    response = requests.get('https://api.sr.se/v2/scheduledepisodes/index?format=json&channelid=132')
     print(response.content)
 
     data = response.json()
@@ -19,15 +19,14 @@ def get_programs():
     # från id ta fram info om kanalen kopplad till id
     # omvandla tiden till rätt format
     # programcategory, name, broadcastinfo
+    
     for x in data['schedule']:
         info_name = x['title']
-        temp = x['starttimeutc']
-        #datetime.fromtimestamp(int(starttimeutc[6:-2]) / 1000)
-        #startTimeInMillis = response.findall(r'\d+', temp)
-        startTime = datetime.datetime.fromtimestamp(int(temp)/1000)
-        startTime = startTime.strftime('%H:%M')
-        endTime = x['endtimeutc']
-        print('>',info_name, startTime, endTime)
+        starttimeutc = x['starttimeutc']
+        endtimeutc = x['endtimeutc']
+        startTime = datetime.datetime.fromtimestamp(int(starttimeutc[6:-2]) / 1000).strftime('%H:%M')
+        endTime = datetime.datetime.fromtimestamp(int(endtimeutc[6:-2]) / 1000).strftime('%H:%M')
+        print('>', startTime, '-', endTime, '--', info_name)
 
     return info_name, startTime
 
@@ -93,8 +92,8 @@ def channels_menu():
 
 
 if __name__ == '__main__':
-    #get_programs()
+    get_programs()
     #get_channels()
-    channels_menu()
+    #channels_menu()
     #write_out_channels_for_menu()
 
