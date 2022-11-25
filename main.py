@@ -19,14 +19,14 @@ def get_programs():
     # från id ta fram info om kanalen kopplad till id
     # omvandla tiden till rätt format
     # programcategory, name, broadcastinfo
-    
+
     for x in data['schedule']:
         info_name = x['title']
         starttimeutc = x['starttimeutc']
         endtimeutc = x['endtimeutc']
         startTime = datetime.datetime.fromtimestamp(int(starttimeutc[6:-2]) / 1000).strftime('%H:%M')
         endTime = datetime.datetime.fromtimestamp(int(endtimeutc[6:-2]) / 1000).strftime('%H:%M')
-        print('>', startTime, '-', endTime, '--', info_name)
+        print('>' + startTime + '-' + endTime + '--' + info_name)
 
     return info_name, startTime
 
