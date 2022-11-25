@@ -50,42 +50,42 @@ def get_channels():
     return channel_dict
 
 # lista som håller flera saker t.ex. lägga llt i en lista, varje sak i listan är kanal som dict
+def write_out_channels_for_menu():
+    channels = get_channels()
+
+    for key in channels:
+        menuChocie = ('>', key)
+        #print('>', key)
+    return menuChocie
+
+
 
 def channels_menu():
     # Get all channels
     # Hämtar alla stationer
     channels = get_channels()
 
-    keyList = list(channels.keys())
-
-    menu_option = {}
-    for channels in menu_option:
-        #keys = channels.keys()
-        #channel_keys = keys['channel_name']
-        print(channels.keys())
-
-    # använd stationens id för något
+    # Put all channels from channel_dict in list
+   # keyList = list(channels.keys())
 
 
-    #channel_dic = {}
-    # Put all channel names in a menu
-    #for channels in channel_dic:
-     #   channel = channels['name']
-      #  print(channel)
 
 
-    # use the channel id to get information
+
 
     keep_playing = True
     while keep_playing:
-        print(keyList)
+        for key in channels:
+            menuChocie = '>' + ' ' + key
+            print(menuChocie)
         # välj station
         choice = input("välj kanal: ")
 
-        #if choice == 1:
-         #   get_programs(channel_id=id)
-       #     print("val: ", choice)
-      #  elif choice == 2:
+        if choice in menuChocie:
+            #get_programs(channels)
+            print("val: ", choice)
+            print(menuChocie[key])
+
 
     #skall det göras en if else till varje kanal?
     # behöver man installera packet i python för c
@@ -96,5 +96,5 @@ if __name__ == '__main__':
     #get_programs()
     #get_channels()
     channels_menu()
-
+    #write_out_channels_for_menu()
 
